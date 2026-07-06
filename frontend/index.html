@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Интервью о выборе курса</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --surface: #fffdf9;
+      --ink: #1c1917;
+      --muted: #6b6560;
+      --accent: #0f766e;
+      --accent-soft: #ccfbf1;
+      --border: #e7e0d5;
+      --shadow: 0 18px 50px rgba(28, 25, 23, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #dbeafe 0%, transparent 28%),
+        radial-gradient(circle at bottom right, #fde68a 0%, transparent 22%),
+        var(--bg);
+      line-height: 1.6;
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 20px 64px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 18px 0 10px;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: clamp(1.9rem, 4vw, 2.6rem);
+      line-height: 1.15;
+      font-weight: 500;
+    }
+
+    .lead {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .question-block {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f8fafc, #ecfeff);
+      border: 1px solid #dbeafe;
+    }
+
+    .question-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .question-text {
+      margin: 0;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 1.25rem;
+      line-height: 1.45;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 160px;
+      resize: vertical;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font: inherit;
+      background: #fff;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #5eead4;
+      box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.18);
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 10px 0 18px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .hint-short {
+      color: #b45309;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .hint-short.visible { opacity: 1; }
+
+    button {
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font: inherit;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #0f766e, #115e59);
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:hover:not(:disabled) { transform: translateY(-1px); }
+    button:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    .response {
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+      display: none;
+    }
+
+    .response.visible { display: block; }
+
+    .response-title {
+      margin: 0 0 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .response-body {
+      margin: 0;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: #fafaf9;
+      border: 1px solid var(--border);
+      white-space: pre-wrap;
+    }
+
+    .response-body.closing {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+    }
+
+    .status {
+      margin-top: 14px;
+      min-height: 1.4em;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .dots::after {
+      content: "";
+      animation: dots 1.2s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0% { content: ""; }
+      25% { content: "."; }
+      50% { content: ".."; }
+      75% { content: "..."; }
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .error {
+      color: #b91c1c;
+    }
+
+    @media (max-width: 600px) {
+      .wrap { padding-top: 28px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">UX Research · LLM</span>
+    <h1>Короткое интервью о выборе онлайн-курса</h1>
+    <p class="lead">
+      Ответьте на один вопрос — исследователь оценит глубину ответа и либо уточнит детали, либо поблагодарит и завершит беседу.
+    </p>
+
+    <section class="card">
+      <div class="question-block">
+        <span class="question-label">Вопрос интервью</span>
+        <p id="question" class="question-text">Загрузка…</p>
+      </div>
+
+      <form id="form">
+        <label for="answer">Ваш ответ</label>
+        <textarea
+          id="answer"
+          name="answer"
+          placeholder="Например: искал курс по Python, сравнивал три платформы, смотрел отзывы и выбрал тот, где была практика..."
+          maxlength="4000"
+          required
+        ></textarea>
+
+        <div class="meta-row">
+          <span id="charCount">0 / 4000</span>
+          <span id="shortHint" class="hint-short">Короткий ответ — вероятно, будет уточняющий вопрос</span>
+        </div>
+
+        <button id="submitBtn" type="submit">Отправить</button>
+      </form>
+
+      <div id="response" class="response" aria-live="polite">
+        <p class="response-title">Ответ исследователя</p>
+        <p id="responseBody" class="response-body"></p>
+      </div>
+
+      <p id="status" class="status"></p>
+      <p id="modeNote" class="footer-note"></p>
+    </section>
+  </div>
+
+  <script>
+    const questionEl = document.getElementById("question");
+    const form = document.getElementById("form");
+    const answerEl = document.getElementById("answer");
+    const submitBtn = document.getElementById("submitBtn");
+    const charCountEl = document.getElementById("charCount");
+    const shortHintEl = document.getElementById("shortHint");
+    const responseEl = document.getElementById("response");
+    const responseBodyEl = document.getElementById("responseBody");
+    const statusEl = document.getElementById("status");
+    const modeNoteEl = document.getElementById("modeNote");
+
+    async function loadQuestion() {
+      try {
+        const res = await fetch("/api/question");
+        if (!res.ok) throw new Error("Не удалось загрузить вопрос");
+        const data = await res.json();
+        questionEl.textContent = data.question;
+      } catch {
+        questionEl.textContent = "Расскажите, как вы выбирали последний онлайн-курс?";
+      }
+    }
+
+    function updateMeta() {
+      const len = answerEl.value.length;
+      charCountEl.textContent = `${len} / 4000`;
+      shortHintEl.classList.toggle("visible", len > 0 && len < 80);
+    }
+
+    answerEl.addEventListener("input", updateMeta);
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const answer = answerEl.value.trim();
+      if (!answer) return;
+
+      submitBtn.disabled = true;
+      responseEl.classList.remove("visible");
+      statusEl.innerHTML = 'Исследователь анализирует ответ<span class="dots"></span>';
+      statusEl.classList.remove("error");
+
+      try {
+        const res = await fetch("/api/answer", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ answer }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.detail || "Ошибка сервера");
+        }
+
+        responseBodyEl.textContent = data.reply;
+        responseBodyEl.classList.toggle("closing", data.is_closing);
+        responseEl.classList.add("visible");
+        statusEl.textContent = data.is_closing
+          ? "Интервью завершено."
+          : "Пожалуйста, ответьте на уточняющий вопрос (в полном продукте здесь был бы второй шаг).";
+
+        modeNoteEl.textContent = data.provider && data.model
+          ? `Ответ сгенерирован: ${data.provider} · ${data.model}`
+          : "";
+      } catch (error) {
+        statusEl.textContent = error.message || "Не удалось отправить ответ";
+        statusEl.classList.add("error");
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    async function loadHealth() {
+      try {
+        const res = await fetch("/api/health");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data.llm_configured) {
+          modeNoteEl.textContent =
+            "⚠ Добавьте LLM_API_KEY в .env — бесплатный ключ: console.groq.com/keys";
+          modeNoteEl.style.color = "#b45309";
+        } else {
+          modeNoteEl.textContent = `Модель: ${data.provider} · ${data.model}`;
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+
+    loadQuestion();
+    loadHealth();
+    updateMeta();
+  </script>
+</body>
+</html>

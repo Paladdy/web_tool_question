@@ -1,0 +1,17 @@
+.env
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store
+.pytest_cache/
+**/.pytest_cache/
+*.egg-info/
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+
+# Локальные заметки (не часть кода)
+VIDEO_SCRIPT.md
